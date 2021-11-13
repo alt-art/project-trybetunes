@@ -55,5 +55,5 @@ export default MusicCard;
 MusicCard.propTypes = {
   title: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
-  trackId: PropTypes.string.isRequired,
+  trackId: PropTypes.number.isRequired,
 };
