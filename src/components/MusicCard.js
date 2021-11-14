@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, removeSong } from '../services/favoriteSongsAPI';
 
 class MusicCard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { trackId, favoritesId } = props;
     this.state = {
-      isFavorite: false,
+      isFavorite: favoritesId.includes(trackId),
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -19,6 +20,7 @@ class MusicCard extends React.Component {
       addSong(trackId);
     } else {
       this.setState({ isFavorite: false });
+      removeSong(trackId);
     }
   }
 
@@ -56,4 +58,5 @@ MusicCard.propTypes = {
   title: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   trackId: PropTypes.number.isRequired,
+  favoritesId: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
