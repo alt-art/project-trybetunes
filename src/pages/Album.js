@@ -18,7 +18,7 @@ class Album extends React.Component {
     this.state = {
       id: params.id,
       musics: [],
-      favoritesId: [],
+      favoriteSongs: [],
       loading: true,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -52,18 +52,19 @@ class Album extends React.Component {
   }
 
   favoriteSongs() {
-    getFavoriteSongs().then((favoritesId) => {
-      console.log(favoritesId);
-      this.setState({ favoritesId }, this.cancelLoading);
+    getFavoriteSongs().then((favoriteSongs) => {
+      this.setState({ favoriteSongs }, this.cancelLoading);
     });
   }
 
   render() {
-    const { musics, favoritesId, loading } = this.state;
+    const { musics, favoriteSongs, loading } = this.state;
     return (
       <div data-testid="page-album">
         <Header />
-        {musics.length !== 0 && !loading ? (
+        { loading ? (
+          <p>Carregando...</p>
+        ) : (
           <div className="album">
             <h1 data-testid="artist-name">{ musics[0].artistName }</h1>
             <h2 data-testid="album-name">{ musics[0].collectionName }</h2>
@@ -77,15 +78,13 @@ class Album extends React.Component {
                   handleChange={ this.handleChange }
                   // Ajuda secreta do Gustavo Meira:
                   // https://github.com/tryber/sd-016-a-project-trybetunes/pull/8/files#diff-a24a919e1af447a053f1189e7d95d4e5f4fbedd776afe9d78969271735dba522R96
-                  isFavorite={ favoritesId.some(
+                  isFavorite={ favoriteSongs.some(
                     (song) => song.trackId === music.trackId,
                   ) }
                 />
               ),
             )}
           </div>
-        ) : (
-          <p>Carregando...</p>
         )}
       </div>
     );
