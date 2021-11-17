@@ -1,5 +1,8 @@
 import React from 'react';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import Header from '../components/Header';
+import Loading from '../components/Loading';
 import MusicCard from '../components/MusicCard';
 import {
   getFavoriteSongs,
@@ -47,17 +50,22 @@ class Favorites extends React.Component {
       <div data-testid="page-favorites">
         <Header />
         {loading ? (
-          <p>Carregando...</p>
+          <Loading />
         ) : (
-          <div className="favorites">
-            <h2>Suas músicas favoritas</h2>
+          <Container maxWidth="md">
+            <Typography variant="h4" gutterBottom>
+              Suas músicas favoritas
+            </Typography>
             {favoriteSongs.length === 0 ? (
-              <p>Nenhuma música adicionada aos favoritos</p>
+              <Typography variant="h6" gutterBottom>
+                Você não possui músicas favoritas
+              </Typography>
             ) : (
               favoriteSongs.map((song) => (
                 <MusicCard
                   key={ song.trackId }
                   title={ song.trackName }
+                  image={ song.artworkUrl100 }
                   src={ song.previewUrl }
                   trackId={ song.trackId }
                   handleChange={ this.handleChange }
@@ -65,7 +73,7 @@ class Favorites extends React.Component {
                 />
               ))
             )}
-          </div>
+          </Container>
         )}
       </div>
     );

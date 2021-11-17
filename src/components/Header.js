@@ -1,5 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import AppBar from '@mui/material/AppBar';
+import Typography from '@mui/material/Typography';
+import Toolbar from '@mui/material/Toolbar';
+import Button from '@mui/material/Button';
+import Skeleton from '@mui/material/Skeleton';
+import Container from '@mui/material/Container';
 import { getUser } from '../services/userAPI';
 
 class Header extends React.Component {
@@ -19,16 +25,38 @@ class Header extends React.Component {
   render() {
     const { user } = this.state;
     return (
-      <header data-testid="header-component" className="header">
-        {user ? (
-          <p data-testid="header-user-name">{user.name}</p>
-        ) : (
-          <p>Carregando...</p>
-        )}
-        <Link data-testid="link-to-search" to="/search">Search</Link>
-        <Link data-testid="link-to-favorites" to="/favorites">Favorites</Link>
-        <Link data-testid="link-to-profile" to="/profile">Profile</Link>
-      </header>
+      <AppBar position="static" data-testid="header-component">
+        <Container maxWidth="md">
+          <Toolbar>
+            {user ? (
+              <Typography variant="h6" color="inherit" sx={ { flexGrow: 1 } }>
+                Olá
+                {' '}
+                { user.name }
+              </Typography>
+            ) : (
+              <Typography variant="h6" color="inherit" sx={ { flexGrow: 1 } }>
+                <Skeleton variant="rectangular" width={ 100 } height={ 30 } />
+              </Typography>
+            )}
+            <Button>
+              <Link data-testid="link-to-search" to="/search">
+                Search
+              </Link>
+            </Button>
+            <Button>
+              <Link data-testid="link-to-favorites" to="/favorites">
+                Favorites
+              </Link>
+            </Button>
+            <Button>
+              <Link data-testid="link-to-profile" to="/profile">
+                Profile
+              </Link>
+            </Button>
+          </Toolbar>
+        </Container>
+      </AppBar>
     );
   }
 }

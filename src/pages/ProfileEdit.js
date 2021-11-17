@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Container from '@mui/material/Container';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import Header from '../components/Header';
 import { getUser, updateUser } from '../services/userAPI';
+import Loading from '../components/Loading';
 
 class ProfileEdit extends Component {
   constructor() {
@@ -55,69 +60,66 @@ class ProfileEdit extends Component {
       <div data-testid="page-profile-edit">
         <Header />
         {loading ? (
-          <p>Carregando...</p>
+          <Loading />
         ) : (
-          <form>
+          <Container maxWidth="md">
+            <Typography variant="h4" gutterBottom>
+              Editar perfil
+            </Typography>
             <div>
-              <label htmlFor="name">
-                <p>Nome</p>
-                <input
-                  type="text"
-                  name="name"
-                  data-testid="edit-input-name"
-                  placeholder="Nome"
-                  value={ user.name }
-                  onChange={ this.handleChange }
-                />
-              </label>
+              <TextField
+                type="text"
+                name="name"
+                data-testid="edit-input-name"
+                label="Nome"
+                value={ user.name }
+                onChange={ this.handleChange }
+                margin="normal"
+              />
             </div>
             <div>
-              <label htmlFor="email">
-                <p>Email</p>
-                <input
-                  type="text"
-                  name="email"
-                  data-testid="edit-input-email"
-                  placeholder="E-mail"
-                  value={ user.email }
-                  onChange={ this.handleChange }
-                />
-              </label>
+              <TextField
+                type="email"
+                name="email"
+                data-testid="edit-input-email"
+                label="E-mail"
+                value={ user.email }
+                onChange={ this.handleChange }
+                margin="normal"
+              />
             </div>
             <div>
-              <label htmlFor="description">
-                <p>Descrição</p>
-                <textarea
-                  name="description"
-                  placeholder="Biografia"
-                  data-testid="edit-input-description"
-                  value={ user.description }
-                  onChange={ this.handleChange }
-                />
-              </label>
+              <TextField
+                name="description"
+                placeholder="Biografia"
+                data-testid="edit-input-description"
+                label="Biografia"
+                multiline
+                rows="3"
+                value={ user.description }
+                onChange={ this.handleChange }
+                margin="normal"
+              />
             </div>
             <div>
-              <label htmlFor="image">
-                <p>Imagem</p>
-                <input
-                  type="text"
-                  name="image"
-                  data-testid="edit-input-image"
-                  placeholder="Url da imagem de perfil"
-                  value={ user.image }
-                  onChange={ this.handleChange }
-                />
-              </label>
+              <TextField
+                type="text"
+                name="image"
+                data-testid="edit-input-image"
+                label="Url da imagem de perfil"
+                value={ user.image }
+                onChange={ this.handleChange }
+                margin="normal"
+              />
             </div>
-            <button
-              type="submit"
+            <Button
               data-testid="edit-button-save"
               onClick={ this.handleSubmit }
               disabled={ this.validInput() }
             >
               Salvar Informações
-            </button>
-          </form>
+            </Button>
+          </Container>
         )}
       </div>
     );

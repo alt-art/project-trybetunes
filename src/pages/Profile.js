@@ -1,6 +1,11 @@
 import React from 'react';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
+import Loading from '../components/Loading';
 import { getUser } from '../services/userAPI';
 
 class Profile extends React.Component {
@@ -8,13 +13,13 @@ class Profile extends React.Component {
     super();
     this.state = {
       user: {},
+      loading: true,
     };
   }
 
   componentDidMount() {
     getUser().then((user) => {
-      console.log(user);
-      this.setState({ user });
+      this.setState({ user, loading: false });
     });
   }
 
@@ -23,19 +28,36 @@ class Profile extends React.Component {
     return (
       <div data-testid="page-profile">
         <Header />
-        <p>
-          <Link to="/profile/edit">Editar perfil</Link>
-        </p>
-        {loading ? (
-          <p>Carregando...</p>
-        ) : (
-          <div>
-            <img data-testid="profile-image" src={ user.image } alt={ user.name } />
-            <h1>{ user.name }</h1>
-            <h2>{ user.email }</h2>
-            <p>{ user.description }</p>
-          </div>
-        )}
+        <Container maxWidth="md">
+          {loading ? (
+            <Loading />
+          ) : (
+            <div>
+              <Avatar
+                sx={ {
+                  width: '100px',
+                  height: '100px',
+                  marginTop: 3,
+                } }
+                data-testid="profile-image"
+                src={ user.image }
+                alt={ user.name }
+              />
+              <Typography variant="h4" gutterBottom>
+                { user.name }
+              </Typography>
+              <Typography variant="h6" gutterBottom>
+                { user.email }
+              </Typography>
+              <Typography variant="subtitle1" gutterBottom>
+                { user.description }
+              </Typography>
+              <Button>
+                <Link to="/profile/edit">Editar perfil</Link>
+              </Button>
+            </div>
+          )}
+        </Container>
       </div>
     );
   }

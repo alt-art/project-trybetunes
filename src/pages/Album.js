@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 import Header from '../components/Header';
 import MusicCard from '../components/MusicCard';
 import getMusics from '../services/musicsAPI';
@@ -8,6 +10,7 @@ import {
   addSong,
   removeSong,
 } from '../services/favoriteSongsAPI';
+import Loading from '../components/Loading';
 
 class Album extends React.Component {
   constructor(props) {
@@ -62,12 +65,16 @@ class Album extends React.Component {
     return (
       <div data-testid="page-album">
         <Header />
-        { loading ? (
-          <p>Carregando...</p>
+        {loading ? (
+          <Loading />
         ) : (
-          <div className="album">
-            <h1 data-testid="artist-name">{ musics[0].artistName }</h1>
-            <h2 data-testid="album-name">{ musics[0].collectionName }</h2>
+          <Container maxWidth="md" fixed>
+            <Typography data-testid="album-name" variant="h4" gutterBottom>
+              { musics[0].collectionName }
+            </Typography>
+            <Typography data-testid="artist-name" variant="h5" gutterBottom>
+              { musics[0].artistName }
+            </Typography>
             {musics.map(
               (music) => music.trackName && (
                 <MusicCard
@@ -75,6 +82,7 @@ class Album extends React.Component {
                   title={ music.trackName }
                   src={ music.previewUrl }
                   trackId={ music.trackId }
+                  image={ music.artworkUrl100 }
                   handleChange={ this.handleChange }
                   // Ajuda secreta do Gustavo Meira:
                   // https://github.com/tryber/sd-016-a-project-trybetunes/pull/8/files#diff-a24a919e1af447a053f1189e7d95d4e5f4fbedd776afe9d78969271735dba522R96
@@ -84,7 +92,7 @@ class Album extends React.Component {
                 />
               ),
             )}
-          </div>
+          </Container>
         )}
       </div>
     );

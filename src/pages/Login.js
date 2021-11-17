@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
+import PropTypes from 'prop-types';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Loading from '../components/Loading';
 import { createUser } from '../services/userAPI';
 
 class Login extends Component {
@@ -8,7 +12,6 @@ class Login extends Component {
     this.state = {
       username: '',
       disabled: true,
-      logged: false,
       loading: false,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -26,39 +29,49 @@ class Login extends Component {
 
   submit() {
     const { username } = this.state;
+    const { history } = this.props;
     this.setState({ loading: true });
     createUser({ name: username }).then(() => {
-      this.setState({ loading: false, logged: true });
+      this.setState({ loading: false });
+      history.push('/search');
     });
   }
 
   render() {
-    const { username, disabled, loading, logged } = this.state;
-    return logged ? (
-      <Redirect to="/search" />
-    ) : (
-      <div data-testid="page-login">
+    const { username, disabled, loading } = this.state;
+    return (
+      <div>
         {!loading ? (
-          <div>
-            <input
+          <Box
+            data-testid="page-login"
+            sx={ {
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100vh',
+            } }
+          >
+            <TextField
               type="text"
               data-testid="login-name-input"
-              placeholder="Username"
+              label="Username"
               value={ username }
               onChange={ this.handleChange }
+              size="small"
+              margin="normal"
             />
-            <input
-              type="button"
+            <Button
               data-testid="login-submit-button"
-              value="Login"
               disabled={ disabled }
               onClick={ this.submit }
-            />
-          </div>
+              size="large"
+            >
+              Login
+            </Button>
+          </Box>
         ) : (
-          <div>
-            <p>Carregando...</p>
-          </div>
+          <Loading />
         )}
       </div>
     );
@@ -66,3 +79,9 @@ class Login extends Component {
 }
 
 export default Login;
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};

@@ -1,12 +1,20 @@
 import React from 'react';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
 
 class NotFound extends React.Component {
   render() {
     return (
-      <div data-testid="page-not-found">
-        <h1>404</h1>
-        <p>Page not found</p>
-      </div>
+      <Container maxWidth="md" data-testid="page-not-found">
+        <Typography variant="h1" gutterBottom>
+          404
+        </Typography>
+        <Divider />
+        <Typography variant="h2" gutterBottom>
+          Page not found
+        </Typography>
+      </Container>
     );
   }
 }
