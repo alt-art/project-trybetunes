@@ -100,9 +100,9 @@ class Search extends React.Component {
               >
                 <Typography variant="subtitle2">{ message }</Typography>
                 <Box>
-                  {artists.map((artist) => (
+                  {artists.map((artist, index) => (
                     <Card
-                      key={ artist.id }
+                      key={ index }
                       sx={ {
                         display: 'flex',
                         justifyContent: 'flex-end',

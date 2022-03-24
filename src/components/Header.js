@@ -40,17 +40,17 @@ class Header extends React.Component {
               </Typography>
             )}
             <Button>
-              <Link data-testid="link-to-search" to="/search">
+              <Link data-testid="link-to-search" to="/search" style={{color: 'white'}}>
                 Search
               </Link>
             </Button>
             <Button>
-              <Link data-testid="link-to-favorites" to="/favorites">
+              <Link data-testid="link-to-favorites" to="/favorites" style={{color: 'white'}}>
                 Favorites
               </Link>
             </Button>
             <Button>
-              <Link data-testid="link-to-profile" to="/profile">
+              <Link data-testid="link-to-profile" to="/profile" style={{color: 'white'}}>
                 Profile
               </Link>
             </Button>
